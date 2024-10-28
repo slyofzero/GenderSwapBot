@@ -6,7 +6,7 @@ import { GenderSwapInput, genderSwapInput, userState } from "@/vars/state";
 
 export async function swapQuery(ctx: CallbackQueryContext<Context>) {
   const id = ctx.from.id;
-  const photo = ctx.update.message?.photo?.at(2);
+  const photo = ctx.update.message?.photo?.at(0);
   const storedLocation = await downloadImage(photo?.file_id || "");
   genderSwapInput[id] = { ...genderSwapInput[id], file: storedLocation };
 
