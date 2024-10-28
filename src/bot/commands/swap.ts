@@ -7,6 +7,8 @@ import {
 } from "grammy";
 
 export function swapCommand(ctx: CommandContext<Context>) {
+  const chatId = ctx.chat.id;
+  delete userState[chatId];
   const text = "What do you want to swap to?";
   const keyboard = new InlineKeyboard()
     .text("To Male", "askImage-0")
