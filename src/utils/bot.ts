@@ -3,6 +3,7 @@ import { teleBot } from "..";
 import axios from "axios";
 import fs from "fs";
 import { errorHandler, log } from "./handlers";
+import { createCanvas, loadImage } from "canvas";
 
 // eslint-disable-next-line
 export function cleanUpBotMessage(text: any) {
@@ -67,4 +68,30 @@ export async function downloadImage(fileId: string) {
   } catch (error) {
     errorHandler(error);
   }
+}
+
+export async function addWatermarkToImage(
+  imagePath: string,
+  watermarkText: string
+) {
+  const image = await loadImage(imagePath);
+  const canvas = createCanvas(image.width, image.height);
+  const ctx = canvas.getContext("2d");
+
+  // Draw the original image
+  ctx.drawImage(image, 0, 0, image.width, image.height);
+
+  // Set watermark style
+  ctx.font = "bold 30px Sans"; // Font size and style
+  ctx.fillStyle = "rgba(0, 0, 0)"; // White with transparency
+  ctx.textAlign = "left";
+  ctx.textBaseline = "bottom";
+
+  // Position the watermark in the bottom-left corner
+  const margin = 10;
+  ctx.fillText(watermarkText, margin, image.height - margin);
+
+  // Save the image with watermark
+  const buffer = canvas.toBuffer("image/png");
+  fs.writeFileSync(imagePath, buffer);
 }

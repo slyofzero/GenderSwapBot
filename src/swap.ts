@@ -5,6 +5,8 @@ import { errorHandler, log } from "./utils/handlers";
 import { nanoid } from "nanoid";
 import { API_TOKEN } from "./utils/env";
 import { GenderSwapInput } from "./vars/state";
+import { addWatermarkToImage } from "./utils/bot";
+import { watermark } from "./utils/constants";
 
 export async function genderSwap(data: GenderSwapInput) {
   const { file, target } = data;
@@ -44,6 +46,7 @@ export async function genderSwap(data: GenderSwapInput) {
     // Write the image to a file
     const newFileName = `./${nanoid(10)}.jpg`;
     await fs.writeFile(newFileName, imageBuffer);
+    await addWatermarkToImage(newFileName, watermark);
 
     log("Stored image");
     return newFileName;
