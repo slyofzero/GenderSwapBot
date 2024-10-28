@@ -59,7 +59,7 @@ export async function downloadImage(fileId: string) {
     });
 
     // Save the image to the unique filename
-    const filePath = `./${uniqueFileName}`;
+    const filePath = `./temp/${uniqueFileName}`;
     await new Promise((resolve, reject) => {
       const stream = fs.createWriteStream(filePath);
       response.data.pipe(stream);

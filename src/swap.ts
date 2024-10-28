@@ -7,8 +7,12 @@ import { API_TOKEN } from "./utils/env";
 import { GenderSwapInput } from "./vars/state";
 import { addWatermarkToImage } from "./utils/bot";
 import { watermark } from "./utils/constants";
+import { CallbackQueryContext, Context } from "grammy";
 
-export async function genderSwap(data: GenderSwapInput) {
+export async function genderSwap(
+  ctx: CallbackQueryContext<Context>,
+  data: GenderSwapInput
+) {
   const { file, target } = data;
   // Create a readable stream for the image file
   const imageStream = await fs.readFile(file);
@@ -44,7 +48,7 @@ export async function genderSwap(data: GenderSwapInput) {
     );
 
     // Write the image to a file
-    const newFileName = `./${nanoid(10)}.jpg`;
+    const newFileName = `./temp/${nanoid(10)}.jpg`;
     await fs.writeFile(newFileName, imageBuffer);
     await addWatermarkToImage(newFileName, watermark);
 
@@ -52,5 +56,18 @@ export async function genderSwap(data: GenderSwapInput) {
     return newFileName;
   } catch (error) {
     errorHandler(error);
+
+    const err = error as Error;
+    const errMsg = err.message;
+
+    if (errMsg.includes("status code 422")) {
+      ctx.reply(
+        "This image couldn't be used, please try another one. The image should be larger than 256x256px, smaller than 4096x4096px. The face area must be 64x64px or more."
+      );
+    } else if (errMsg.includes("status code 413")) {
+      ctx.reply(
+        "The image you used is too large, maximum image size can be 4mb."
+      );
+    }
   }
 }

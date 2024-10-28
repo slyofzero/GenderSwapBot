@@ -34,9 +34,5 @@ export async function executeStep(
     }
   } catch (error) {
     errorHandler(error);
-    const err = error as Error;
-    if (err.message.includes("status code 422")) {
-      ctx.reply("This image couldn't be used, please try another one.");
-    }
   }
 }
