@@ -1,6 +1,5 @@
 import { BOT_USERNAME } from "@/utils/env";
 import { CommandContext, Context, InlineKeyboard } from "grammy";
-import { setUpBot } from "./setup";
 import { cleanUpBotMessage } from "@/utils/bot";
 
 export function startBot(ctx: CommandContext<Context>) {
@@ -14,7 +13,7 @@ export function startBot(ctx: CommandContext<Context>) {
 @${BOT_USERNAME} is to be added to your project telegram. By adding @${BOT_USERNAME} to your project, you will be able to view  the buys, marketcap and transactions real time. Hype your project with a dedicated buy bot today!
 
 ◦ /setup : To setup the bot
-◦ /settings : Opens the menu to add a token, gif, telegram group link and adjust any available settings for the buy bot`;
+◦ /swap : To perfrom genderswap on images`;
 
     return ctx.reply(cleanUpBotMessage(text), { parse_mode: "MarkdownV2" });
   } else {
