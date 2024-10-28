@@ -82,7 +82,7 @@ export async function addWatermarkToImage(
   ctx.drawImage(image, 0, 0, image.width, image.height);
 
   // Set watermark style
-  ctx.font = "bold 30px Sans"; // Font size and style
+  ctx.font = "bold 30px Arial"; // Font size and style
   ctx.fillStyle = "rgba(0, 0, 0)"; // White with transparency
   ctx.textAlign = "left";
   ctx.textBaseline = "bottom";
