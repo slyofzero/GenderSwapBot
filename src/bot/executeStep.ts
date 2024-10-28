@@ -1,23 +1,16 @@
 import { CallbackQueryContext, CommandContext, Context } from "grammy";
 import { log } from "@/utils/handlers";
 import { userState } from "@/vars/state";
-import {
-  inputGroupLink,
-  setGroupLink,
-  setMedia,
-  setMediaInput,
-} from "./actions/portal";
+import { swapQuery } from "./actions/swap";
+import { askImage } from "./commands/swap";
 
 const steps: { [key: string]: any } = {
-  setGroupLink,
-
-  setMediaInput,
-  setMedia,
+  swapImage: swapQuery,
+  askImage,
 };
 
 const requestIds: { [key: number]: any } = {
   0: () => null,
-  7: inputGroupLink,
 };
 
 export async function executeStep(

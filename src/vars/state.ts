@@ -1,9 +1,7 @@
 export const userState: { [key: number]: string } = {};
 
-export interface PortalDataInput {
-  link: string;
-  media: string;
-  text: string;
-  channelId: number;
+export interface GenderSwapInput {
+  target: number;
+  file: string;
 }
-export const portalDataInput: { [key: number]: Partial<PortalDataInput> } = {};
+export const genderSwapInput: { [key: number]: Partial<GenderSwapInput> } = {};
